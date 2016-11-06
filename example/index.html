@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>My React App</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid content">
+  <div class="col-sm-10 com-sm-offset-1 col-md-8 col-md-offset-2">
+    <div class="row">
+      <h1>Example of dynamic number library</h1>
+      <form name="directiveForm" class="form-horizontal" >
+        <div class="form-group" id="input1">
+          <label class="control-label">Number may be positive or negative, decimal separator comma, integer 5 chars</label>
+          <input class="form-control input" onChange={this.onChange.bind(this,0)} separator={','} integer={5} fraction={5} />
+          <div>How looks model: <span class="model"></span></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="./app.js"></script>
+<script>
+  dynamicNumberExample(
+          document.getElementById("input1").getElementsByClassName("input")[0],
+          document.getElementById("input1").getElementsByClassName("model")[0],
+          {
+
+          }
+  );
+
+</script>
+</body>
+</html>
