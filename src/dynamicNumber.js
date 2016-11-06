@@ -80,7 +80,6 @@ class DynamicNumber {
 
   calculateFromView(rawViewValue = 0, cursorPosition = null) {
     this._rawViewValue = rawViewValue;
-    this._newModelValue = 0;
     this._newViewValue = '';
     this._cursor = cursorPosition;
 
@@ -96,9 +95,9 @@ class DynamicNumber {
     if(value === "-"){
       return this._createCorrectResponse("-", 0, 1);
     }
-    //test fails, therefore we use old values
+
     if(this._regexp.test(value) === false){
-      return false;
+      return this._createWrongResponse();
     }
     else {
       return this._createCorrectResponse(
@@ -115,6 +114,10 @@ class DynamicNumber {
       model,
       cursor
     };
+  }
+
+  _createWrongResponse() {
+    return false;
   }
 
   get cursorPosition() {
