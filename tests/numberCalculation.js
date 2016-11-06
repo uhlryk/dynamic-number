@@ -17,110 +17,110 @@ describe('Check calculated model and view values from input', ()=>{
     });
     describe('value=\'1234567\'', ()=>{
       var value = '1234567';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 1234567', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(1234567);
+        expect(resp.model).to.be.equal(1234567);
       });
       it('should viewValue equal \'1234567\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('1234567');
+        expect(resp.view).to.be.equal('1234567');
       });
     });
     describe('value=\'-1234567\'', ()=>{
       var value = '-1234567';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal -1234567', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(-1234567);
+        expect(resp.model).to.be.equal(-1234567);
       });
       it('should viewValue equal \'-1234567\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('-1234567');
+        expect(resp.view).to.be.equal('-1234567');
       });
     });
     describe('value=\'123,4567\'', ()=>{
       var value = '123,4567';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
-      it('should modelValue equal 0', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(0);
-      });
-      it('should viewValue equal \'0\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('0');
+      it('should fail', ()=>{
+        expect(resp).to.be.equal(false);
       });
     });
     describe('value=\'123.4567\'', ()=>{
       var value = '123.4567';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 123.4567', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(123.4567);
+        expect(resp.model).to.be.equal(123.4567);
       });
       it('should viewValue equal \'123.4567\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('123.4567');
+        expect(resp.view).to.be.equal('123.4567');
       });
     });
     describe('value=\'.\'', ()=>{
       var value = '.';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 0', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(0);
+        expect(resp.model).to.be.equal(0);
       });
       it('should viewValue equal \'0.\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('0.');
+        expect(resp.view).to.be.equal('0.');
       });
     });
     describe('value=\'-\'', ()=>{
       var value = '-';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 0', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(0);
+        expect(resp.model).to.be.equal(0);
       });
       it('should viewValue equal \'-\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('-');
+        expect(resp.view).to.be.equal('-');
       });
     });
     describe('value=\'-.\'', ()=>{
       var value = '-.';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 0', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(0);
+        expect(resp.model).to.be.equal(0);
       });
       it('should viewValue equal \'-0.\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('-0.');
+        expect(resp.view).to.be.equal('-0.');
       });
     });
     describe('value=\'12345678901234567\'', ()=>{
       var value = '12345678901234567';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
-      it('should modelValue equal 0', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(0);
-      });
-      it('should viewValue equal \'0\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('0');
+      it('should fail', ()=>{
+        expect(resp).to.be.equal(false);
       });
     });
     describe('value=\'1.23456789012345678\'', ()=>{
       var value = '1.23456789012345678';
+      var resp;
       before(()=>{
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
-      it('should modelValue equal 0', ()=>{
-        expect(dynamicNumber.modelValue).to.be.equal(0);
-      });
-      it('should viewValue equal \'0\'', ()=>{
-        expect(dynamicNumber.viewValue).to.be.equal('0');
+      it('should fail', ()=>{
+        expect(resp).to.be.equal(false);
       });
     });
   });
@@ -134,26 +134,25 @@ describe('Check calculated model and view values from input', ()=>{
     });
     describe('value=\'123,4567\'', ()=> {
       var value = '123,4567';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 123.4567', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(123.4567);
+        expect(resp.model).to.be.equal(123.4567);
       });
       it('should viewValue equal \'123,4567\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('123,4567');
+        expect(resp.view).to.be.equal('123,4567');
       });
     });
     describe('value=\'123.4567\'', ()=> {
       var value = '123.4567';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
-      it('should modelValue equal 0', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(0);
-      });
-      it('should viewValue equal \'0\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('0');
+      it('should fail', ()=>{
+        expect(resp).to.be.equal(false);
       });
     });
   });
@@ -169,26 +168,25 @@ describe('Check calculated model and view values from input', ()=>{
     });
     describe('value=\'123,4567\'', ()=> {
       var value = '123,4567';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 123.4567', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(123.4567);
+        expect(resp.model).to.be.equal(123.4567);
       });
       it('should viewValue equal \'123,4567\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('123,4567');
+        expect(resp.view).to.be.equal('123,4567');
       });
     });
     describe('value=\'-123,4567\'', ()=> {
       var value = '-123,4567';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
-      it('should modelValue equal 0', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(0);
-      });
-      it('should viewValue equal \'0\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('0');
+      it('should fail', ()=>{
+        expect(resp).to.be.equal(false);
       });
     });
   });
@@ -204,26 +202,25 @@ describe('Check calculated model and view values from input', ()=>{
     });
     describe('value=\'-123,4567\'', ()=> {
       var value = '-123,4567';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal -123.4567', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(-123.4567);
+        expect(resp.model).to.be.equal(-123.4567);
       });
       it('should viewValue equal \'-123,4567\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('-123,4567');
+        expect(resp.view).to.be.equal('-123,4567');
       });
     });
     describe('value=\'123,4567\'', ()=> {
       var value = '123,4567';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
-      it('should modelValue equal 0', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(0);
-      });
-      it('should viewValue equal \'0\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('0');
+      it('should fail', ()=>{
+        expect(resp).to.be.equal(false);
       });
     });
   });
@@ -240,26 +237,28 @@ describe('Check calculated model and view values from input', ()=>{
     });
     describe('value=\'-123456789,123\'', ()=> {
       var value = '-123456789,123';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal -123456789.123', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(-123456789.123);
+        expect(resp.model).to.be.equal(-123456789.123);
       });
       it('should viewValue equal \'-123.456.789,123\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('-123.456.789,123');
+        expect(resp.view).to.be.equal('-123.456.789,123');
       });
     });
     describe('value=\'123456789,123\'', ()=> {
       var value = '123456789,123';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 123456789.123', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(123456789.123);
+        expect(resp.model).to.be.equal(123456789.123);
       });
       it('should viewValue equal \'123.456.789,123\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('123.456.789,123');
+        expect(resp.view).to.be.equal('123.456.789,123');
       });
     });
   });
@@ -276,26 +275,28 @@ describe('Check calculated model and view values from input', ()=>{
     });
     describe('value=\'-123456789.123\'', ()=> {
       var value = '-123456789.123';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal -123456789.123', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(-123456789.123);
+        expect(resp.model).to.be.equal(-123456789.123);
       });
       it('should viewValue equal \'-123 456 789.123\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('-123 456 789.123');
+        expect(resp.view).to.be.equal('-123 456 789.123');
       });
     });
     describe('value=\'123456789.123\'', ()=> {
       var value = '123456789.123';
+      var resp;
       before(()=> {
-        dynamicNumber.calculate(value);
+        resp = dynamicNumber.calculateFromView(value);
       });
       it('should modelValue equal 123456789.123', ()=> {
-        expect(dynamicNumber.modelValue).to.be.equal(123456789.123);
+        expect(resp.model).to.be.equal(123456789.123);
       });
       it('should viewValue equal \'123 456 789.123\'', ()=> {
-        expect(dynamicNumber.viewValue).to.be.equal('123 456 789.123');
+        expect(resp.view).to.be.equal('123 456 789.123');
       });
     });
   });

@@ -2,9 +2,11 @@ import DynamicNumber from "../src/index";
 
 window.dynamicNumberExample = function (inputElement, outputElement, options) {
   var state = {
-    viewValue: 0,
-    modelValue: 0
-  }
+    view: "",
+    model: 0,
+    cursor: 0
+  };
+
   var dynamicNumber = new DynamicNumber();
   dynamicNumber.separator = options.separator || ".";
   dynamicNumber.integer = options.integer = 10;
@@ -13,27 +15,27 @@ window.dynamicNumberExample = function (inputElement, outputElement, options) {
   dynamicNumber.negative = options.negative = true;
   dynamicNumber.thousand = options.thousand = null;
 
-  function calculate (dynamicNumber, inputElement, outputElement, state) {
-    dynamicNumber.calculate(inputElement.value, state.modelValue, state.viewValue);
-    state.modelValue = dynamicNumber.modelValue;
-    state.viewValue = dynamicNumber.viewValue;
+  function setDOMValues () {
     inputElement.removeEventListener("input", listener);
-    outputElement.textContent = state.modelValue;
-    inputElement.value = state.viewValue;
+    outputElement.textContent = state.model;
+    inputElement.value = state.view;
     inputElement.addEventListener("input", listener);
   }
 
-  function listener (ev) {
-    calculate(dynamicNumber, inputElement, outputElement, state);
+  function calculate () {
+    var res = dynamicNumber.calculateFromView(inputElement.value);
+    if(res) {
+      state.view = res.view;
+      state.model = res.model;
+      state.cursor = res.cursor;
+    }
+    setDOMValues();
   }
 
-  dynamicNumber.calculate(inputElement.value, state.modelValue, state.viewValue);
-  state.modelValue = dynamicNumber.modelValue;
-  state.viewValue = dynamicNumber.viewValue;
-  outputElement.textContent = state.modelValue;
-  inputElement.value = state.viewValue;
-
-  inputElement.addEventListener("input", listener);
+  function listener () {
+    calculate();
+  }
+  calculate();
 };
 
 

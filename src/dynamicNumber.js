@@ -74,14 +74,12 @@ class DynamicNumber {
     this._calculateThousandSeparator();
   }
 
-  calculateViewFromModel(modelValue = 0) {
+  calculateFromModel(modelValue = 0) {
     return this._createViewValueFromModel(modelValue);
   }
 
-  calculate(rawViewValue = 0, oldModelValue = 0, oldViewValue = '0', cursorPosition = null) {
+  calculateFromView(rawViewValue = 0, cursorPosition = null) {
     this._rawViewValue = rawViewValue;
-    this._oldModelValue = oldModelValue;
-    this._oldViewValue = oldViewValue;
     this._newModelValue = 0;
     this._newViewValue = '';
     this._cursor = cursorPosition;
@@ -89,42 +87,34 @@ class DynamicNumber {
     var value = String(this._rawViewValue);
     value = this._removeThousandSeparator(value);
     value = this._removeLeadingZero(value);
-    if(value === '' && String(this._rawViewValue).charAt(0)=== '0'){
-      this._newModelValue = 0;
-      this._newViewValue = '0';
-      return;
+    if(value === "" && String(this._rawViewValue).charAt(0)=== "0"){
+      return this._createCorrectResponse("0", 0, 1);
     }
-    if(value === undefined || value === ''){
-      this._newModelValue = 0;
-      this._newViewValue = '';
-      return;
+    if(value === undefined || value === ""){
+      return this._createCorrectResponse("", 0, 0);
     }
-    if(value === '-'){
-      this._newModelValue = 0;
-      this._newViewValue = '-';
-      return;
+    if(value === "-"){
+      return this._createCorrectResponse("-", 0, 1);
     }
     //test fails, therefore we use old values
     if(this._regexp.test(value) === false){
-      this._newModelValue = this._oldModelValue;
-      this._newViewValue = this._oldViewValue;
-      return;
+      return false;
     }
-     // view value success 'correct view format' test
     else {
-      this._newModelValue = this._createModelValueFromView(value);
-      this._newViewValue = this._createViewValueFromView(value);
-      this._cursor = this._calculateNewCursorPosition();
-      return;
+      return this._createCorrectResponse(
+        this._createViewValueFromView(value),
+        this._createModelValueFromView(value),
+        this._calculateNewCursorPosition()
+      );
     }
   }
 
-  get modelValue() {
-    return this._newModelValue;
-  }
-
-  get viewValue() {
-    return this._newViewValue;
+  _createCorrectResponse(view, model, cursor) {
+    return {
+      view,
+      model,
+      cursor
+    };
   }
 
   get cursorPosition() {
