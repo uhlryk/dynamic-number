@@ -1,21 +1,10 @@
 import DynamicNumber from "../src/index";
 
 window.dynamicNumberExample = function (inputElement, outputElement, options) {
-
-  function calculate (dynamicNumber, inputElement, outputElement, modelValue, viewValue) {
-    dynamicNumber.calculate(inputElement.value, modelValue, viewValue);
-    modelValue = dynamicNumber.modelValue;
-    viewValue = dynamicNumber.viewValue;
-    inputElement.removeEventListener("input", listener);
-    outputElement.textContent = modelValue;
-    inputElement.value = viewValue;
-    inputElement.addEventListener("input", listener);
+  var state = {
+    viewValue: 0,
+    modelValue: 0
   }
-
-  function listener (ev) {
-    calculate(dynamicNumber, inputElement, outputElement, modelValue, viewValue);
-  }
-
   var dynamicNumber = new DynamicNumber();
   dynamicNumber.separator = options.separator || ".";
   dynamicNumber.integer = options.integer = 10;
@@ -24,13 +13,25 @@ window.dynamicNumberExample = function (inputElement, outputElement, options) {
   dynamicNumber.negative = options.negative = true;
   dynamicNumber.thousand = options.thousand = null;
 
-  var modelValue = 0;
-  var viewValue = 0;
-  dynamicNumber.calculate(inputElement.value, modelValue, viewValue);
-  modelValue = dynamicNumber.modelValue;
-  viewValue = dynamicNumber.viewValue;
-  outputElement.textContent = modelValue;
-  inputElement.value = viewValue;
+  function calculate (dynamicNumber, inputElement, outputElement, state) {
+    dynamicNumber.calculate(inputElement.value, state.modelValue, state.viewValue);
+    state.modelValue = dynamicNumber.modelValue;
+    state.viewValue = dynamicNumber.viewValue;
+    inputElement.removeEventListener("input", listener);
+    outputElement.textContent = state.modelValue;
+    inputElement.value = state.viewValue;
+    inputElement.addEventListener("input", listener);
+  }
+
+  function listener (ev) {
+    calculate(dynamicNumber, inputElement, outputElement, state);
+  }
+
+  dynamicNumber.calculate(inputElement.value, state.modelValue, state.viewValue);
+  state.modelValue = dynamicNumber.modelValue;
+  state.viewValue = dynamicNumber.viewValue;
+  outputElement.textContent = state.modelValue;
+  inputElement.value = state.viewValue;
 
   inputElement.addEventListener("input", listener);
 };
